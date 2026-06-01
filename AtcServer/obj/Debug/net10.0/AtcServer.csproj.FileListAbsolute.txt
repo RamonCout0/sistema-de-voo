@@ -62,3 +62,4 @@
 /home/ramon/Documentos/sistema-de-voo/AtcServer/obj/Debug/net10.0/AtcServer.pdb
 /home/ramon/Documentos/sistema-de-voo/AtcServer/obj/Debug/net10.0/AtcServer.genruntimeconfig.cache
 /home/ramon/Documentos/sistema-de-voo/AtcServer/obj/Debug/net10.0/ref/AtcServer.dll
+/home/ramon/Documentos/sistema-de-voo/AtcServer/obj/Debug/net10.0/AtcServer.sourcelink.json

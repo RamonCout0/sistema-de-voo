@@ -47,6 +47,28 @@ def desenhar_aviao():
     print("                 /____ /__________\\")
     print("                      \\__________/")
 
+
+def alerta_visual_frenetico():
+    # \033[41m = Fundo Vermelho | \033[37m = Texto Branco | \033[0m = Resetar cores
+    for _ in range(6):
+        limpar_tela()
+        print("\033[41m\033[37m") # Ativa pânico visual no Linux
+        print("!" * 55)
+        print("!!!          MAYDAY! COMBUSTÍVEL CRÍTICO!          !!!")
+        print("!!!             INSTRUÇÃO DE EMERGÊNCIA            !!!")
+        print("!" * 55)
+        emitir_som(1500, 100)
+        time.sleep(0.15)
+        
+        limpar_tela()
+        print("\033[0m\033[31m") # Fundo normal, texto vermelho
+        print("-" * 55)
+        print("---          MAYDAY! COMBUSTÍVEL CRÍTICO!          ---")
+        print("---             INSTRUÇÃO DE EMERGÊNCIA            ---")
+        print("-" * 55)
+        time.sleep(0.15)
+    print("\033[0m") # Garante que reseta a cor do terminal no final
+
 def executar_sistema():
     clear_count = 0
     limpar_tela()

@@ -16,23 +16,78 @@ namespace AtcServer
     }
 
     // 2. A Implementação da Lógica da Torre
+   // 2. A Implementação da Lógica da Torre
     public class AirTrafficService : IAirTrafficService
     {
         public string SolicitarPouso(string voo, int combustivel)
         {
-            Console.WriteLine($"\n[LOG TORRE] Dados recebidos -> Voo: {voo} | Combustível: {combustivel}%");
-            
             if (combustivel < 0)
             {
                 // Simula erro estruturado (SOAP Fault)
                 throw new FaultException("Dados de telemetria inválidos: combustível negativo.");
             }
+
             if (combustivel < 15) 
             {
+                // COLOQUE ISSO AQUI: Dispara o pânico na torre antes de responder ao cliente
+                EfeitoSireneTorre(voo, combustivel);
                 return "EMERGENCIA: Pista 02-Esquerda liberada. Vetores livres para aproximação imediata!";
             }
             
+            if (combustivel < 40)
+            {
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine($"\n[LOG TORRE] Voo {voo} em ESPERA (Combustível: {combustivel}%)");
+                Console.ResetColor();
+                return "ESPERA: Aguarde em órbita padrão a 15.000 pés.";
+            }
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"\n[LOG TORRE] Voo {voo} APROVADO (Combustível: {combustivel}%)");
+            Console.ResetColor();
             return "AUTORIZADO: Pista 02-Direita. Vento 090 com 10 nós. Aguarde na frequência.";
+        }
+
+        // ADICIONE ESTE MÉTODO NOVO AQUI DENTRO DA CLASSE:
+       private void EfeitoSireneTorre(string voo, int combustivel)
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                // Inverte as cores: Fundo Vermelho, Texto Branco
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Clear();
+                Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                Console.WriteLine("!!!                                                      !!!");
+                Console.WriteLine("!!!             ALERTA DE EMERGÊNCIA GERAL               !!!");
+                Console.WriteLine($"!!!      AERONAVE {voo} COM COMBUSTÍVEL CRÍTICO: {combustivel}%     !!!");
+                Console.WriteLine("!!!                                                      !!!");
+                Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                
+                // CORREÇÃO PARA LINUX: Emite o som nativo do terminal
+                Console.Write("\a"); 
+                
+                System.Threading.Thread.Sleep(150);
+                
+                // Inverte as cores: Fundo Preto, Texto Vermelho
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Clear();
+                Console.WriteLine("------------------------------------------------------------");
+                Console.WriteLine("---                                                      ---");
+                Console.WriteLine("---             ALERTA DE EMBERGÊNCIA GERAL              ---");
+                Console.WriteLine($"---      AERONAVE {voo} COM COMBUSTÍVEL CRÍTICO: {combustivel}%     ---");
+                Console.WriteLine("---                                                      ---");
+                Console.WriteLine("------------------------------------------------------------");
+                
+                // CORREÇÃO PARA LINUX: Segundo som nativo
+                Console.Write("\a"); 
+                
+                System.Threading.Thread.Sleep(150);
+            }
+            Console.ResetColor();
+            Console.Clear();
+            Program.DesenharTorre(); // Redesenha a torre amarela após o pânico
         }
     }
 
@@ -64,17 +119,16 @@ namespace AtcServer
             app.Run();
         }
 
-        static void DesenharTorre()
-        {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine(@"             |             ");
-            Console.WriteLine(@"       ==============      ");
-            Console.WriteLine(@"       |  [O]  [O]  |      ");
-            Console.WriteLine(@"       \   ______   /      ");
-            Console.WriteLine(@"        \_|______|_/       ");
-            Console.WriteLine(@"          |      |         ");
-            Console.WriteLine("===========================");
-            Console.ResetColor();
-        }
+        public static void DesenharTorre(){
+    Console.ForegroundColor = ConsoleColor.Yellow;
+    Console.WriteLine(@"             |             ");
+    Console.WriteLine(@"       ==============      ");
+    Console.WriteLine(@"       |  [O]  [O]  |      ");
+    Console.WriteLine(@"       \   ______   /      ");
+    Console.WriteLine(@"        \_|______|_/       ");
+    Console.WriteLine(@"          |      |         ");
+    Console.WriteLine("===========================");
+    Console.ResetColor();
+}
     }
 }
