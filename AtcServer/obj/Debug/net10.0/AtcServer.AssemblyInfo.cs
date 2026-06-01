@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AtcServer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2ff7ece58939bd12c033c8b58954d869d6f455ef")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+49d095cd48c195cfd7b2889b48fa9c6380b127ae")]
 [assembly: System.Reflection.AssemblyProductAttribute("AtcServer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AtcServer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

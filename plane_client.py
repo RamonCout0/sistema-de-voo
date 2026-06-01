@@ -6,7 +6,7 @@ from zeep import Client
 def limpar_tela():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-# Sons pelo SoX (Certifique-se de ter rodado: sudo apt install sox)
+# CORRIGIDO: Sem '-t alsa', sem '2>/dev/null' e printando erros reais no except
 def emitir_som(tipo="radar"):
     if os.name == 'nt':
         import winsound
@@ -14,10 +14,14 @@ def emitir_som(tipo="radar"):
         elif tipo == "erro": winsound.Beep(300, 400)
     else:
         try:
-            if tipo == "emergencia": os.system("play -nq -t alsa synth 0.2 square 1400 vol 0.4 2>/dev/null")
-            elif tipo == "erro": os.system("play -nq -t alsa synth 0.3 sawtooth 250 vol 0.6 2>/dev/null")
-            elif tipo == "sucesso": os.system("play -nq -t alsa synth 0.1 sine 800 : synth 0.15 sine 1200 vol 0.5 2>/dev/null")
-        except: pass
+            if tipo == "emergencia": 
+                os.system("play -nq synth 0.2 square 1400 vol 0.4")
+            elif tipo == "erro": 
+                os.system("play -nq synth 0.3 sawtooth 250 vol 0.6")
+            elif tipo == "sucesso": 
+                os.system("play -nq synth 0.1 sine 800 : synth 0.15 sine 1200 vol 0.5")
+        except Exception as e:
+            print(f"\n[ERRO ÁUDIO CLIENTE]: {e}")
 
 def animacao_pouso(voo_id):
     limpar_tela()
@@ -40,7 +44,7 @@ def executar_painel():
     print("Sincronizando console com o barramento SOAP...")
     try:
         client = Client("http://localhost:8000/Service.asmx?wsdl")
-        print("[OK] Conexão ativa.")
+        print("[OK] Conexão activa.")
         emitir_som("sucesso")
         time.sleep(1)
     except Exception as e:
@@ -100,7 +104,7 @@ def executar_painel():
                     mapa_atual = client.service.ObterMapaRadar()
                     
                     if "MAYDAY" in mapa_atual:
-                        print("\033[41m\033[97m") # Fundo vermelho e texto branco
+                        print("\033[41m\033[97m") 
                         print(mapa_atual)
                         print("\033[0m") 
                         emitir_som("emergencia") 

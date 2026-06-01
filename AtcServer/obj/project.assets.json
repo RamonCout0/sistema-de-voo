@@ -314,19 +314,19 @@
     ]
   },
   "packageFolders": {
-    "/home/ramon/.nuget/packages/": {}
+    "/home/haji/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/ramon/Documentos/sistema-de-voo/AtcServer/AtcServer.csproj",
+      "projectUniqueName": "/home/haji/Documentos/sistema-de-voo/AtcServer/AtcServer.csproj",
       "projectName": "AtcServer",
-      "projectPath": "/home/ramon/Documentos/sistema-de-voo/AtcServer/AtcServer.csproj",
-      "packagesPath": "/home/ramon/.nuget/packages/",
-      "outputPath": "/home/ramon/Documentos/sistema-de-voo/AtcServer/obj/",
+      "projectPath": "/home/haji/Documentos/sistema-de-voo/AtcServer/AtcServer.csproj",
+      "packagesPath": "/home/haji/.nuget/packages/",
+      "outputPath": "/home/haji/Documentos/sistema-de-voo/AtcServer/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/ramon/.nuget/NuGet/NuGet.Config"
+        "/home/haji/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net10.0"

@@ -33,7 +33,7 @@ namespace AtcServer
         public int Combustivel { get; set; }
         public string Status { get; set; }
         public double Distancia { get; set; }
-        public int CiclosVoo { get; set; } = 0; // Controla a lentidão do gasto de combustível
+        public int CiclosVoo { get; set; } = 0; 
         public int TempoRetencao { get; set; } = 0;
     }
 
@@ -92,14 +92,23 @@ namespace AtcServer
             throw new FaultException($"ERRO: Voo {id} não encontrado.");
         }
 
+        // CORRIGIDO: Removido o '-t alsa' e adicionado log de erro no catch
         public static void TocarSomLinux(string tipo)
         {
             try {
                 if (OperatingSystem.IsLinux()) {
-                    string args = tipo == "emergencia" ? "-nq -t alsa synth 0.2 square 1400 vol 0.4" : "-nq -t alsa synth 0.1 sine 800 vol 0.2";
-                    Process.Start(new ProcessStartInfo { FileName = "play", Arguments = args, RedirectStandardOutput = true, RedirectStandardError = true, UseShellExecute = false });
+                    string args = tipo == "emergencia" ? "-nq synth 0.2 square 1400 vol 0.4" : "-nq synth 0.1 sine 800 vol 0.2";
+                    Process.Start(new ProcessStartInfo { 
+                        FileName = "play", 
+                        Arguments = args, 
+                        RedirectStandardOutput = true, 
+                        RedirectStandardError = true, 
+                        UseShellExecute = false 
+                    });
                 }
-            } catch { /* Ignora se o sox não estiver instalado */ }
+            } catch (Exception ex) { 
+                Console.WriteLine($"[ERRO ÁUDIO BACKEND]: {ex.Message}"); 
+            }
         }
 
         public static string GerarMapaString()
@@ -121,7 +130,6 @@ namespace AtcServer
                 if (aero.Status != "QUEDA ❌" && aero.Status != "CONCLUIDO")
                 {
                     grid[aero.X, aero.Y] = " ✈ ";
-                    // Ajuste para o ID não quebrar o alinhamento
                     if (aero.X > 0) grid[aero.X - 1, aero.Y] = aero.Voo.Length >= 3 ? aero.Voo.Substring(0,3) : aero.Voo.PadRight(3);
                 }
                 if (aero.Status == "MAYDAY 🚨") temEmergencia = true;
@@ -148,8 +156,6 @@ namespace AtcServer
                     aero.X, aero.Y, aero.Distancia, aero.Combustivel + "%", aero.Status));
             }
             sb.AppendLine("=====================================================================");
-            
-            // NOVO: Adiciona o Log na String do Mapa
             sb.AppendLine("||                        LOG DE EVENTOS RECENTES                  ||");
             sb.AppendLine("---------------------------------------------------------------------");
             foreach (var log in HistoricoLogs) sb.AppendLine($" > {log}");
@@ -191,7 +197,6 @@ namespace AtcServer
                         }
 
                         aero.CiclosVoo++;
-                        // NERF NO COMBUSTÍVEL: Só perde 1% a cada 5 atualizações do radar (demora muito mais!)
                         if (aero.CiclosVoo % 5 == 0) aero.Combustivel = Math.Max(0, aero.Combustivel - 1);
 
                         if (aero.Combustivel <= 0)
