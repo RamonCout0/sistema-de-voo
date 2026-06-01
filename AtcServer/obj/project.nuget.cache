@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "eR6b+OmJiWw=",
+  "success": true,
+  "projectFilePath": "/home/ramon/Documentos/sistema-de-voo/AtcServer/AtcServer.csproj",
+  "expectedPackageFiles": [
+    "/home/ramon/.nuget/packages/soapcore/1.2.1.13/soapcore.1.2.1.13.nupkg.sha512",
+    "/home/ramon/.nuget/packages/system.codedom/9.0.2/system.codedom.9.0.2.nupkg.sha512",
+    "/home/ramon/.nuget/packages/system.servicemodel.http/8.1.1/system.servicemodel.http.8.1.1.nupkg.sha512",
+    "/home/ramon/.nuget/packages/system.servicemodel.primitives/8.1.1/system.servicemodel.primitives.8.1.1.nupkg.sha512"
+  ],
+  "logs": []
+}
